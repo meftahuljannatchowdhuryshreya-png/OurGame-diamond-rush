@@ -1,0 +1,45 @@
+#ifndef TYPES_HPP
+#define TYPES_HPP
+
+#include "raylib.h"
+#include "raymath.h"
+#include <string>
+#include <vector>
+
+//defination
+enum TileType {
+    TILE_EMPTY=0,
+    TILE_WALL=1,
+    TILE_SPEOBJECT=2,
+    TILE_CAGE=3
+};
+//dec
+struct Room {
+    std::string name;
+    int x;
+    int y;
+    int w;
+    int h;
+    Color color;
+};
+struct LevelData {
+    int id;
+    std::string name;
+    int width;
+    int height;
+    float startX;
+    float startY;
+    std::vector<std::vector<int>>grid;
+    std::vector<Room>rooms;
+    Vector2 startPos;
+    Vector2 key1Pos;
+    Vector2 key2Pos;
+    bool key2FromBoss;
+    bool key1Collected;
+    bool key2Collected;
+    bool chestUnlocked;
+    Vector2 doorPos;
+    Vector2 chestPos;
+
+};
+#endif
