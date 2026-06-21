@@ -118,7 +118,7 @@ for(int r=0;r<20;r++) {
 
   
 //Level 3
-  LevelData level3;
+ LevelData level3;
 level3.id=3;
 level3.name="Abyssal Sanctum";
 level3.width=1024;
@@ -131,14 +131,15 @@ level3.key2Pos={608.0f,288.0f}; //another key in the crimson ritual chamber(19,9
 level3.doorPos={576.0f,512.0f}; //door in stairway to hell's heart(18,16)
 level3.chestPos={896.0f,160.0f}; //chest in chamber of Whispers(28,5)
 
-level3.rooms={
-    {"Gates of Desolation",2,2,12,5,{80,200,100,50}},
-    {"Chamber of Whispers",13,2,17,6,{200,50,50,55}},
-    {"Hall of Obsidian Pillars",2,6,12,7,{150,40,40,60}},
-    {"The Crimson Ritual Chamber",13,7,9,6,{100,200,80,50}},
-    {"Vault of Cursed Relics",21,7,9,7,{50,100,200,45}},
-    {"Stairway to Hell's Heart",2,12,18,6,{255,100,0,50}},
-    {"Altar of Eternal Night",19,13,11,5,{180,60,60,35}}
+
+level3.rooms = {
+    {"Gates of Desolation", 1, 1, 12, 5, {80, 200, 100, 50}},
+    {"Chamber of Whispers", 14, 1, 17, 6, {200, 50, 50, 55}},
+    {"Hall of Obsidian Pillars", 1, 7, 12, 5, {150, 40, 40, 60}},
+    {"The Crimson Ritual Chamber", 14, 8, 7, 4, {100, 200, 80, 50}},
+    {"Vault of Cursed Relics", 22, 8, 9, 5, {50, 100, 200, 45}},
+    {"Stairway to Hell's Heart", 1, 13, 17, 5, {255, 100, 0, 50}},
+    {"Altar of Eternal Night", 20, 14, 11, 4, {180, 60, 60, 35}}
 };
     // //0=blank,1=block,2=Blood Altar/Torture Device,3=cursed storage crates,
     // 4=human bones,5=Crimson Pillar
@@ -171,7 +172,7 @@ for(int r=0;r<20;r++) {
     level3.grid[r][c]=grid3[r][c];
 }
     mapslist.pushback(level3);
-
+  
   
 //Level 4
     LevelData level4;
