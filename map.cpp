@@ -84,7 +84,7 @@ level2.rooms={
     {"Vault of Rusted Souls",19,1,12,8,{70,70,90,35}},
     {"Dark Corridor of Grinding Gears",1,9,11,4,{180,60,255,55}},
     {"Main Corridor",13,5,5,13,{90,90,120,30}},
-    {"Grinding Bones Containment Chamber",2,15,9,4,{100,35,160,45}},
+    {"Grinding Bones Containment Chamber",2,14,9,4,{100,35,160,45}},
     {"Core Energy Enigma Vault",19,10,12,8,{160,40,200,55}},
 };
 //0=blank,1=block,2=special object(just put some images of machine/anything related to the room) and 3 is a cage full of human
