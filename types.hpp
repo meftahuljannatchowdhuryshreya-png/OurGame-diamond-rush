@@ -49,15 +49,12 @@ struct Player {
     float speed;
     std::string facing; // "up", "down", "left", "right"
     
-    // Jump physics state
     bool isJumping;
     float jumpTick;
     float zHeight;
-    
-    // Crawling layout state
+
     bool isCrawling;
-    
-    // Combat
+
     bool isAttacking;
     int attackTick;
     int attackDuration;
