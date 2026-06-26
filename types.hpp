@@ -42,4 +42,35 @@ struct LevelData {
     Vector2 chestPos;
 
 };
+
+struct Player {
+    Vector2 pos;
+    float size;
+    float speed;
+    std::string facing; // "up", "down", "left", "right"
+    
+    // Jump physics state
+    bool isJumping;
+    float jumpTick;
+    float zHeight;
+    
+    // Crawling layout state
+    bool isCrawling;
+    
+    // Combat
+    bool isAttacking;
+    int attackTick;
+    int attackDuration;
+    float attackRange;
+    int attackCooldown;
+    
+    float health;
+    float maxHealth;
+    int lives;
+    bool isInvulnerable;
+    int invulnerableTick;
+    
+    int score;
+    bool hasKey;
+};
 #endif
