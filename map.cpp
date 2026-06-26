@@ -26,11 +26,11 @@ level1.chestPos={576.0f,320.0f}; //chest in Portal to Cursed Depths(18,10)
 
 
 level1.rooms = {
-    {"The Bone Garden of Fallen Warriors", 1, 2, 12, 5, {80, 200, 100, 75}},
-    {"Portal to Cursed Depths", 15, 2, 10, 4, {200, 50, 50, 75}},
+    {"The Bone Garden of Fallen Warriors", 1, 2, 12, 5, {80, 200, 100, 255}},
+    {"Portal to Cursed Depths", 15, 2, 10, 4, {200, 50, 50, 255}},
     {"Vault of Sealed Sorrows", 1, 8, 12, 6, {150, 40, 40, 80}},
-    {"Hall of Echoing Silence", 10, 12, 13, 6, {100, 200, 80, 75}},
-    {"Altar of First Desecration", 24, 7, 7, 11, {50, 100, 200, 75}},
+    {"Hall of Echoing Silence", 10, 12, 13, 6, {100, 200, 80, 255}},
+    {"Altar of First Desecration", 24, 7, 7, 11, {50, 100, 200, 255}},
 };
     
  //0=blank,1=block,2=Blood Altar/Torture Device,3=cursed items,4=human bones
