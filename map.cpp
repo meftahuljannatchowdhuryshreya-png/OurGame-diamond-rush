@@ -35,7 +35,8 @@ level1.rooms = {
     
  //0=blank,1=block,2=Blood Altar/Torture Device,3=cursed items,4=human bones
 
-int grid1[20][32]={
+level1.grid = {
+  
 //   0 1 2 3 4 5 6 7 8 910111213141516171819202122232425262728293031
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//0
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//1
@@ -58,10 +59,7 @@ int grid1[20][32]={
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//18
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} //19
 };
-for(int r=0;r<20;r++) {
-    for(int c=0;c<32;c++) 
-    level1.grid[r][c]=grid1[r][c];
-}
+
     maplist.push_back(level1);
 
   
@@ -88,7 +86,8 @@ level2.rooms={
     {"Core Energy Enigma Vault",19,10,12,8,{160,40,200,55}},
 };
 //0=blank,1=block,2=special object(just put some images of machine/anything related to the room) and 3 is a cage full of human
-int grid2[20][32]={
+
+level2.grid = {
     
  //  0 1 2 3 4 5 6 7 8 910111213141516171819202122232425262728293031
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//0
@@ -112,10 +111,7 @@ int grid2[20][32]={
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//18
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} //19
 };
-for(int r=0;r<20;r++) {
-    for(int c=0;c<32;c++) 
-    level2.grid[r][c]=grid2[r][c];
-}
+
     maplist.push_back(level2);
 
   
@@ -146,7 +142,8 @@ level3.rooms = {
     // //0=blank,1=block,2=Blood Altar/Torture Device,3=cursed storage crates,
     // 4=human bones,5=Crimson Pillar
 
-int grid3[20][32]={
+level3.grid = {
+  
 //   0 1 2 3 4 5 6 7 8 910111213141516171819202122232425262728293031
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//0
     {1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},//1
@@ -169,10 +166,7 @@ int grid3[20][32]={
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//18
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}//19
 };
-for(int r=0;r<20;r++) {
-    for(int c=0;c<32;c++) 
-    level3.grid[r][c]=grid3[r][c];
-}
+
     maplist.push_back(level3);
   
   
@@ -186,10 +180,10 @@ level4.startX=256.0f; //start from(8,17)
 level4.startY=544.0f;
 level4.startPos={256.0f,544.0f};
 level4.key1Pos={896.0f,288.0f};//one key will be in decontamination bay(28,9)
-level4.key2Pos={128.0f,192.0f}; //after defeating the boss,we get this key
-                                //in boss reactor arena(4,6)
+level4.key2Pos={128.0f,192.0f}; //after defeating the boss,we get this key  in boss reactor arena(4,6)
 level4.doorPos={864.0f,160.0f};//door in Power junction(27,5)
 level4.chestPos={864.0f,512.0f};//chest in reactor entry dock(27,16)
+  
 level4.chestUnlocked=false;
 level4.key1Collected=false;
 level4.key2Collected=false;
@@ -205,7 +199,7 @@ level4.rooms={
     {"Corridor",17,2,3,16,{120,0,0,255}},
 };
 
-int grid4[20][32]={
+level4.grid = {
     
 //   0 1 2 3 4 5 6 7 8 910111213141516171819202122232425262728293031
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//0
@@ -229,10 +223,7 @@ int grid4[20][32]={
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},//18
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} //19
 };
-for(int r=0;r<20;r++) {
-    for(int c=0;c<32;c++) 
-    level4.grid[r][c]=grid4[r][c];
-}
+
     maplist.push_back(level4);
 
 }
