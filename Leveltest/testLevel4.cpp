@@ -1,6 +1,11 @@
 #include<bits/stdc++.h>
 #include "raylib.h"
 using namespace std;
+
+struct Player {
+    int x, y;
+};
+
 struct LevelData {
     std::vector<std::vector<int>>grid;
 };
@@ -47,10 +52,11 @@ int main()
     constexpr int screenHeight = 600;
     int tileSize = 25;
     
-    InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
+    InitWindow(screenWidth, screenHeight, "Dungeon Level 4");
     SetTargetFPS(60);
     Levelconfig();
     // level4.grid is ready now
+    Player player = {3*tileSize, 3*tileSize};
     
     while (!WindowShouldClose())
     {
@@ -75,6 +81,22 @@ int main()
                         DrawRectangle(j*tileSize, i*tileSize, tileSize, tileSize, BLUE); break;
                     }
                 }
+            }
+            int playerRadius = 10;
+            int playerVelocity = 3;
+            DrawCircle (player.x, player.y, playerRadius, YELLOW);
+            
+            if (IsKeyDown(KEY_A)){
+                if (level4.grid[player.y/tileSize][(player.x-playerVelocity-playerRadius)/tileSize] == 0) player.x -= playerVelocity;
+            }
+            if (IsKeyDown(KEY_D)){
+                if (level4.grid[player.y/tileSize][(player.x+playerVelocity+playerRadius)/tileSize] == 0) player.x += playerVelocity;
+            }
+            if (IsKeyDown(KEY_W)){
+                if (level4.grid[(player.y-playerVelocity-playerRadius)/tileSize][player.x/tileSize] == 0) player.y -= playerVelocity;
+            }
+            if (IsKeyDown(KEY_S)){
+                if (level4.grid[(player.y+playerVelocity+playerRadius)/tileSize][player.x/tileSize] == 0) player.y += playerVelocity;
             }
         EndDrawing();
     }
