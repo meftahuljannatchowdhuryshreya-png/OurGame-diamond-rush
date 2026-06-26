@@ -38,8 +38,8 @@ inline void UpdatePlayer(Player &p, int grid[20][32]) {
    
    
     float adjustedSpeed = p.speed;
-    if (p.isCrawling) adjustedSpeed *= 0.50f;
-    if (p.isJumping) adjustedSpeed *= 1.20f;
+    if (p.isCrawling) adjustedSpeed *= **************f; //will fix these 2 after deciding p.speed
+    if (p.isJumping) adjustedSpeed *= **************f;
 
     Vector2 movement = { 0.0f, 0.0f };
  
