@@ -1,12 +1,12 @@
-#ifndef TYPES_HPP
-#define TYPES_HPP
+#ifndef TYPES_H
+#define TYPES_H
 
 #include "raylib.h"
-#include "raymath.h"
+//#include "raymath.h"
 #include <string>
 #include <vector>
 
-//defination
+//definition
 enum TileType {
     TILE_EMPTY=0,
     TILE_WALL=1,
@@ -70,4 +70,12 @@ struct Player {
     int score;
     bool hasKey;
 };
+
+struct FinalBoss {
+    Vector2 pos;
+    float speed;
+    float health;
+    float size;
+};
 #endif
+
