@@ -1,0 +1,6 @@
+{
+  "name": "Space Diamond Quest",
+  "description": "An action-adventure Diamond Quest game on a futuristic spaceship map with obstacles, enemies, a boss fight, chiptune soundtrack, and weather effects.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
