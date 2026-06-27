@@ -1,13 +1,12 @@
-#ifndef MAP_HPP
-#define MAP_HPP
-
-#include"types.hpp"
+#include"types.h"
+#include"map.h"
+#include"raylib.h"
 #include<vector>
 #include<string>
 
-inline std::vector<LevelData>maplist;
+std::vector<LevelData>maplist;
 
-inline void Levelconfig() {
+void Levelconfig() {
   maplist.clear();
 
 //Level 1
@@ -227,4 +226,26 @@ level4.grid = {
     maplist.push_back(level4);
 
 }
-#endif
+
+void DrawLevel (LevelData level, float tile){
+    for (int i=0; i<20; i++){
+        for (int j=0; j<32; j++){
+            switch (level.grid[i][j]){
+            case 0:
+                DrawRectangle(j*tile, i*tile, tile, tile, BLACK);  break;
+            case 1:
+                DrawRectangle(j*tile, i*tile, tile, tile, DARKPURPLE); break;
+            case 2:
+                DrawRectangle(j*tile, i*tile, tile, tile, GRAY); break;
+            case 3:
+                DrawRectangle(j*tile, i*tile, tile, tile, RED); break;
+            case 4:
+                DrawRectangle(j*tile, i*tile, tile, tile, WHITE); break;
+            case 5:
+                DrawRectangle(j*tile, i*tile, tile, tile, BLUE); break;
+            }
+        }
+    }
+}
+
+
