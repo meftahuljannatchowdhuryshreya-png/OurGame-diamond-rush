@@ -38,8 +38,8 @@ void UpdatePlayer(Player &p, std::vector<std::vector<int>> grid) {
    
    
     float adjustedSpeed = p.speed;
-    //if (p.isCrawling) adjustedSpeed *= **************f; //will fix these 2 after deciding p.speed
-    //if (p.isJumping) adjustedSpeed *= **************f;
+    if (p.isCrawling) adjustedSpeed *= 2.0f; //will fix these 2 after deciding p.speed
+    if (p.isJumping) adjustedSpeed *= 4.11f;
 
     Vector2 movement = { 0.0f, 0.0f };
  
