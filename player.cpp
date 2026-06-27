@@ -1,13 +1,13 @@
-#ifndef PLAYER_HPP
-#define PLAYER_HPP
-
-#include "types.hpp"
-#include "audio.hpp"
-#include "map.hpp"
+#include "types.h"
+#include "player.h"
+//#include "audio.hpp"
+#include "map.h"
 #include <cmath>
+#include <vector>
 
 
-inline bool CheckWallIntersection(Vector2 pCandidate, int grid[20][32], float size) {
+
+bool CheckWallIntersection(Vector2 pCandidate, std::vector<std::vector<int>> grid, float size) {
     float halfS = size / 2.0f;
   
     Vector2 corners[4] = {
@@ -34,12 +34,12 @@ inline bool CheckWallIntersection(Vector2 pCandidate, int grid[20][32], float si
     return false;
 }
 
-inline void UpdatePlayer(Player &p, int grid[20][32]) {
+void UpdatePlayer(Player &p, std::vector<std::vector<int>> grid) {
    
    
     float adjustedSpeed = p.speed;
-    if (p.isCrawling) adjustedSpeed *= **************f; //will fix these 2 after deciding p.speed
-    if (p.isJumping) adjustedSpeed *= **************f;
+    //if (p.isCrawling) adjustedSpeed *= **************f; //will fix these 2 after deciding p.speed
+    //if (p.isJumping) adjustedSpeed *= **************f;
 
     Vector2 movement = { 0.0f, 0.0f };
  
@@ -112,9 +112,9 @@ inline void UpdatePlayer(Player &p, int grid[20][32]) {
     if ((IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_X) || IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) && p.attackCooldown <= 0) {
         p.isAttacking = true;
         p.attackTick = p.attackDuration;
-        p.attackCooldown = 12; //the time gap in each attack(time=frame/fps),here we have 60 fps(so,60fps=1sec),and frame 12. 
+        p.attackCooldown = 60; //the time gap in each attack(time=frame/fps),here we have 60 fps(so,60fps=1sec),and frame 12. 
                                 //so,time=12/60=0.2,attack number per sec=60/12=5.
-        PlayGameSFX(sfxAttack);
+        //PlayGameSFX(sfxAttack);
     }
 
     if (p.isAttacking) {
@@ -132,5 +132,3 @@ inline void UpdatePlayer(Player &p, int grid[20][32]) {
         }
     }
 }
-
-#endif 
