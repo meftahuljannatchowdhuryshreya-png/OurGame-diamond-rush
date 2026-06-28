@@ -3,36 +3,34 @@
 #include "map.h"
 #include <cmath>
 #include <vector>
+using namespace std;
 
-bool CheckWallIntersection(Vector2 pos, std::vector<std::vector<int>> grid, float size) {
-    float halfS = size / 2.0f;
+bool CheckWallIntersection(Vector2 pos, vector<vector<int>> grid, float size) {
   
     Vector2 corners[4] = {
-        { pos.x - halfS, pos.y - halfS }, //top-left
-        { pos.x + halfS, pos.y - halfS }, //top-right
-        { pos.x - halfS, pos.y + halfS }, //bottom-left
-        { pos.x + halfS, pos.y + halfS }  //bottom-right
+        { pos.x - size/2, pos.y - size/2 }, //top-left
+        { pos.x + size/2, pos.y - size/2}, //top-right
+        { pos.x - size/2, pos.y + size/2}, //bottom-left
+        { pos.x + size/2, pos.y + size/2}  //bottom-right
     };
 
-    int tileW = 32;
-    int tileH = 32;
-
     for (int i = 0; i < 4; i++) {
-        int cellX = (int)(corners[i].x / tileW);
-        int cellY = (int)(corners[i].y / tileH);
 
+        int cellX = (int)(corners[i].x / tile);
+        int cellY = (int)(corners[i].y / tile);
       
         if (cellX < 0 || cellX >= 32 || cellY < 0 || cellY >= 20) {
-                  return true; }
+            return true;
+        }
         
-        if (grid[cellY][cellX] == 1 || grid[cellY][cellX] == 2 || grid[cellY][cellX] == 3 || grid[cellY][cellX] == 4) {
-                  return true; }
+        if (!grid[cellY][cellX] == 0){
+            return true;
+        }
     }
     return false;
 }
 
-void UpdatePlayer(Player &p, std::vector<std::vector<int>> grid) {
-   
+void UpdatePlayer(Player &p, vector<vector<int>> grid) {
    
     float adjustedSpeed = p.speed;
 
@@ -58,14 +56,9 @@ void UpdatePlayer(Player &p, std::vector<std::vector<int>> grid) {
     }
 
     //Sliding movement
-    Vector2 nextX = { p.pos.x + movement.x * adjustedSpeed, p.pos.y };
-    if (!CheckWallIntersection(nextX, grid, p.size)) {
-        p.pos.x = nextX.x;
-    }
-    
-    Vector2 nextY = { p.pos.x, p.pos.y + movement.y * adjustedSpeed };
-    if (!CheckWallIntersection(nextY, grid, p.size)) {
-        p.pos.y = nextY.y;
+    Vector2 next = { p.pos.x + movement.x * adjustedSpeed, p.pos.y + movement.y * adjustedSpeed };
+    if (!CheckWallIntersection(next, grid, p.size)) {
+        p.pos = next;
     }
 
     if (p.attackCooldown > 0) p.attackCooldown--;
