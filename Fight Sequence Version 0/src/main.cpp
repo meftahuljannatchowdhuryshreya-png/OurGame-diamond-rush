@@ -9,8 +9,7 @@ using namespace std;
 
 int main (){
     constexpr int screenWidth = 1024;
-    constexpr int screenHeight = 648;
-    float tile = 32.0f;
+    constexpr int screenHeight = 640;
     InitWindow(screenWidth, screenHeight, "Game");
     InitAudio();
     SetTargetFPS(60);
@@ -38,7 +37,7 @@ int main (){
 
     
     Image bossImage = LoadImage("boss.png");
-    ImageResize(&bossImage,tile, tile);
+    ImageResize(&bossImage, boss.size, boss.size);
     Texture2D bossTexture = LoadTextureFromImage(bossImage);
     UnloadImage(bossImage);
 
@@ -49,17 +48,17 @@ int main (){
     UnloadImage(bombImage);
 
     Image noAttack = LoadImage("noattack.png");
-    ImageResize(&noAttack, tile, tile);
+    ImageResize(&noAttack, player.size, player.size);
     Texture2D noAttackTexture = LoadTextureFromImage(noAttack);
     UnloadImage(noAttack);
 
     Image leftAttack = LoadImage("leftattack.png");
-    ImageResize(&leftAttack, tile, tile);
+    ImageResize(&leftAttack, player.size, player.size);
     Texture2D leftAttackTexture = LoadTextureFromImage(leftAttack);
     UnloadImage(leftAttack);
 
     Image rightAttack = LoadImage("rightattack.png");
-    ImageResize(&rightAttack, tile, tile);
+    ImageResize(&rightAttack, player.size, player.size);
     Texture2D rightAttackTexture = LoadTextureFromImage(rightAttack);
     UnloadImage(rightAttack);
 
@@ -67,6 +66,7 @@ int main (){
     bool victory = false;
 
     Vector2 bombPos; Player p;
+    Vector2 bomb2Pos, bomb3Pos;
 
     while (!WindowShouldClose()) {
         cnt = (cnt + 1) % 200;
@@ -75,6 +75,10 @@ int main (){
             p = player;
             bombPos.x = GetRandomValue((int)boss.pos.x-50, (int)boss.pos.x+50);
             bombPos.y = GetRandomValue((int)boss.pos.y-50, (int)boss.pos.y+50);
+            bomb2Pos.x = GetRandomValue((int)boss.pos.x-100, (int)boss.pos.x+100);
+            bomb2Pos.y = GetRandomValue((int)boss.pos.y-100, (int)boss.pos.y+100);
+            bomb3Pos.x = GetRandomValue((int)boss.pos.x-200, (int)boss.pos.x+200);
+            bomb3Pos.y = GetRandomValue((int)boss.pos.y-200, (int)boss.pos.y+200);
         }
         
         if (IsKeyPressed(KEY_R))
@@ -89,7 +93,7 @@ int main (){
         ClearBackground(BLACK);
         UpdateAudio();
         if (!gameOver && !victory){
-            DrawLevel(maplist[3], tile);
+            DrawLevel(maplist[3]);
             // Draw Player
             if (player.isAttacking || player.attackCooldown>0){
                 if (player.pos.x<=boss.pos.x) DrawTexture (rightAttackTexture, player.pos.x-player.size/2, player.pos.y-player.size/2, WHITE);
@@ -113,14 +117,26 @@ int main (){
             if (cnt<150){
                 if (!CheckWallIntersection({bombPos.x+tile/2, bombPos.y+tile/2}, maplist[3].grid, tile)){
                 DrawTexture(bombtexture, bombPos.x, bombPos.y, WHITE); 
-                }// Draw the bomb position as an orange circle
+                }
+                if (boss.health<=100 && !CheckWallIntersection({bomb2Pos.x+tile/2, bomb2Pos.y+tile/2}, maplist[3].grid, tile)){
+                DrawTexture(bombtexture, bomb2Pos.x, bomb2Pos.y, WHITE); 
+                }
+                if (boss.health<=50 && !CheckWallIntersection({bomb3Pos.x+tile/2, bomb3Pos.y+tile/2}, maplist[3].grid, tile)){
+                DrawTexture(bombtexture, bomb3Pos.x, bomb3Pos.y, WHITE); 
+                } 
             }
 
             // Simulate Bomb Explosion
             if (cnt==150){
-                if (!CheckWallIntersection({bombPos.x+tile/2, bombPos.y+tile/2}, maplist[3].grid, 2*tile)){
+                if (!CheckWallIntersection({bombPos.x+tile/2, bombPos.y+tile/2}, maplist[3].grid, tile)){
                     Bomb(bombPos, player);
-                } // Call the Bomb function to draw the bomb attack
+                }
+                if (boss.health<=100 && !CheckWallIntersection({bomb2Pos.x+tile/2, bomb2Pos.y+tile/2}, maplist[3].grid, tile)){
+                    Bomb(bomb2Pos, player);
+                }
+                if (boss.health<=50 && !CheckWallIntersection({bomb3Pos.x+tile/2, bomb3Pos.y+tile/2}, maplist[3].grid, tile)){
+                    Bomb(bomb3Pos, player);
+                }
             }
         }
         // Health
@@ -146,3 +162,4 @@ int main (){
     CloseWindow();
     CloseAudio();
 }
+
