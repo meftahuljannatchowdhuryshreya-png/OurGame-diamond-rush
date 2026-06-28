@@ -3,8 +3,9 @@
 #include"raylib.h"
 #include<vector>
 #include<string>
+using namespace std;
 
-std::vector<LevelData>maplist;
+vector<LevelData>maplist;
 
 void Levelconfig() {
   maplist.clear();
@@ -135,7 +136,7 @@ level4.grid = {
 
 
 
-void DrawLevel (LevelData level, float tile){
+void DrawLevel (LevelData level){
     for (int i=0; i<20; i++){
         for (int j=0; j<32; j++){
             switch (level.grid[i][j]){
