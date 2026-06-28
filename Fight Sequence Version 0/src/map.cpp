@@ -6,6 +6,7 @@
 using namespace std;
 
 vector<LevelData>maplist;
+float tile = 32.0f;
 
 void Levelconfig() {
   maplist.clear();
