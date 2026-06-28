@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "types.h"
-
+extern float tile = 32.0f;
 extern std::vector<LevelData>maplist;
 void Levelconfig();
 void DrawLevel(LevelData level, float tile);
