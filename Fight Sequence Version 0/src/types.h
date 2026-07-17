@@ -34,6 +34,7 @@ struct Bullet
     float speed;
     bool active;
     float damage;
+    float distanceTravelled;
     float direction;
 };
 struct Enemy

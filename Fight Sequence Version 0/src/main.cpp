@@ -7,6 +7,7 @@
 #include "slime.h"
 #include "spike.h"
 #include "laser.h"
+#include "position.h"
 #include "raylib.h"
 #include "audio.h"
 using namespace std;
@@ -35,21 +36,22 @@ int main (){
     boss.health = 200.0f;
     boss.size = 32.0f;
 
-    Enemy goblin;
-    goblin.position={235.0f,235.0f};
-    goblin.width=16.0f;
-    goblin.height=32.0f;
-    goblin.speed=1.0f;
-    goblin.health=50.0f;
-    goblin.velocityY=0;
-    goblin.onGround=false;
-    goblin.moveRight=true;
-    goblin.bullet.active=false;
-    goblin.bullet.speed=8;
-    goblin.bullet.active=false;
-    goblin.bullet.speed=7;
-    goblin.bullet.damage=0.5f;
-    goblin.attackCooldown=0;
+    const int MAX_GOBLINS=40;
+    Enemy goblin[ MAX_GOBLINS];
+    int goblinCount=0;
+    for(int i=0;i<MAX_GOBLINS;i++) {
+    goblin[i].width=16.0f;
+    goblin[i].height=32.0f;
+    goblin[i].speed=1.0f;
+    goblin[i].health=50.0f;
+    goblin[i].velocityY=0;
+    goblin[i].onGround=false;
+    goblin[i].moveRight=true;
+    goblin[i].bullet.active=false;
+    goblin[i].bullet.speed=7;
+    goblin[i].bullet.damage=0.5f;
+    goblin[i].attackCooldown=0;
+    }
 
     Slime slime;
     slime.position={200.0f,560.0f};
@@ -84,24 +86,6 @@ int main (){
 
     level1Lasers[i].damage = 0.7f;
     level4Lasers[i].damage = 0.99f;
-//level 1 lasers
-    level1Lasers[0].start={306,452};
-    level1Lasers[0].end={306,504};
-    level1Lasers[1].start={331,240};
-    level1Lasers[1].end={408,240};
-    level1Lasers[2].start={611,368};
-    level1Lasers[2].end={665,368};
-    level1Lasers[3].start={755,264};
-    level1Lasers[3].end={755,311};
-     //level 4 laser
-    level4Lasers[0].start={528,388};
-    level4Lasers[0].end={528,476};
-    level4Lasers[1].start={656,108};
-    level4Lasers[1].end={656,188};
-    level4Lasers[2].start={656,300};
-    level4Lasers[2].end={656,380};
-    level4Lasers[3].start={656,452};
-    level4Lasers[3].end={656,508};
     }
 
     for(int i=0;i<5;i++)
@@ -120,35 +104,14 @@ int main (){
 
     level2Lasers[i].damage = 0.9f;
     level3Lasers[i].damage=0.3f;
-
-    //level 2 laser
-    level2Lasers[0].start={400,172};
-    level2Lasers[0].end={400,220};
-    level2Lasers[1].start={592,172};
-    level2Lasers[1].end={592,252};
-    level2Lasers[2].start={400,300};
-    level2Lasers[2].end={400,380};
-    level2Lasers[3].start={400,490};
-    level2Lasers[3].end={400,540};
-    level2Lasers[4].start={592,388};
-    level2Lasers[4].end={592,472};
-    //level 3 laser
-    level3Lasers[0].start={326,208};
-    level3Lasers[0].end={412,208};
-    level3Lasers[1].start={432,106};
-    level3Lasers[1].end={432,156};
-    level3Lasers[2].start={708,238};
-    level3Lasers[2].end={798,238};
-    level3Lasers[3].start={900,432};
-    level3Lasers[3].end={958,432};
-    level3Lasers[4].start={134,400};
-    level3Lasers[4].end={189,400};
     }
  
 
     Player playerCopy = player;
     FinalBoss bossCopy = boss;
-    Enemy goblinCopy=goblin;
+    Enemy goblinsCopy[MAX_GOBLINS];
+    for(int i=0;i<MAX_GOBLINS;i++) 
+    goblinsCopy[i]=goblin[i];
     Slime slimeCopy=slime;
 
 
@@ -182,6 +145,7 @@ int main (){
     bool gameOver = false;
     bool victory = false;
     int currentLevel=0;
+    int prevLevel=-1;
     Vector2 bombPos; Player p;
     Vector2 bomb2Pos, bomb3Pos;
 
@@ -202,7 +166,9 @@ int main (){
             {
                 player = playerCopy;
                 boss = bossCopy;
-                goblin=goblinCopy;
+               for(int i=0;i<MAX_GOBLINS;i++) 
+               goblin[i]=goblinsCopy[i];
+               prevLevel=-1;
                 slime=slimeCopy;
                 gameOver = false;
                 victory = false;
@@ -222,6 +188,12 @@ int main (){
         currentLevel=3;
 
         if (!gameOver && !victory){
+            //choose goblin number
+            if(currentLevel!=prevLevel) {
+                prevLevel=currentLevel;
+                LoadLevelPositions(currentLevel,goblin,goblinCount,slime,spike,level1Lasers,level2Lasers,level3Lasers,level4Lasers);
+            }
+
             DrawLevel(maplist[currentLevel]);
             // Draw Player
             if (player.isAttacking || player.attackCooldown>0){
@@ -249,9 +221,11 @@ int main (){
             AttackBoss(player, boss);
             }
             //enemy
-             UpdateEnemy(goblin,maplist[currentLevel].grid,player);
-             AttackEnemy(player, goblin);
-             DrawEnemy(goblin);
+            for(int i=0;i<goblinCount;i++) {
+             UpdateEnemy(goblin[i],maplist[currentLevel].grid,player);
+             AttackEnemy(player, goblin[i]);
+             DrawEnemy(goblin[i]);
+            }
 
              UpdateSlime(slime,maplist[currentLevel].grid,player);
              AttackSlime(player,slime);
@@ -333,4 +307,5 @@ int main (){
     CloseWindow();
     CloseAudio();
 }
+
 

@@ -31,7 +31,7 @@ void UpdateEnemy(Enemy &e, vector<vector<int>> grid,Player &player) {
      int leftCol=e.position.x/TILE_SIZE;
     int rightCol=(e.position.x+e.width-1)/TILE_SIZE;
 
-    int groundRow=(e.position.y+e.height)/TILE_SIZE;
+    int groundRow=((e.position.y+e.height-1)/TILE_SIZE)+1;
 //gravity
      if (grid[groundRow][leftCol] != 0 || grid[groundRow][rightCol] != 0)
     {
@@ -67,6 +67,7 @@ void UpdateEnemy(Enemy &e, vector<vector<int>> grid,Player &player) {
 //bullet
     if(!e.bullet.active && e.attackCooldown==0) {
         e.bullet.active=true;
+        e.bullet.distanceTravelled=0;
         e.bullet.position.y=e.position.y+e.height/2;
 //attack right
           if(e.moveRight) {
@@ -82,9 +83,10 @@ void UpdateEnemy(Enemy &e, vector<vector<int>> grid,Player &player) {
 
       if(e.health>0 && e.bullet.active) {
         e.bullet.position.x+=2*e.bullet.speed*e.bullet.direction;
+        e.bullet.distanceTravelled+=2*e.bullet.speed;
       }
-      //now remove
-      if(e.bullet.position.x>1024 || e.bullet.position.x<0) {
+      //will disspear after sometime
+      if(e.bullet.distanceTravelled>=250) {
         e.bullet.active=false;
       }
       //damage player
