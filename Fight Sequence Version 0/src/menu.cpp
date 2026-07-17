@@ -1,4 +1,9 @@
-#include "menu.h"
+
+#include"types.h"
+#include"menu.h"
+#include"raylib.h"
+#include<vector>
+#include<string>
 
 Menu::Menu()
 {
