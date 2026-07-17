@@ -21,7 +21,7 @@ void UpdateSpike(Spike &spike,Player &player) {
 };
 if(CheckCollisionRecs(playerRect,spikeRect))
 {
-    player.health-=0.3f;
+    player.health-=3.0f;
     if(player.health<0) {
         player.health=0;
     }

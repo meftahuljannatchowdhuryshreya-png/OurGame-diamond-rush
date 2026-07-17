@@ -42,7 +42,7 @@ int main (){
     for(int i=0;i<MAX_GOBLINS;i++) {
     goblin[i].width=16.0f;
     goblin[i].height=32.0f;
-    goblin[i].speed=1.0f;
+    goblin[i].speed=1.5f;
     goblin[i].health=50.0f;
     goblin[i].velocityY=0;
     goblin[i].onGround=false;
@@ -61,14 +61,18 @@ int main (){
     slime[i].height=16.0f;
     slime[i].health=20.0f;
     slime[i].moveRight=true;
-    slime[i].speed=1.5f;
+    slime[i].speed=0.5f;
     }
 
-    Spike spike;
-    spike.position = {900.0f, 571.0f};
-    spike.width = 64;
-    spike.height = 16;
-    spike.health = 1;
+    const int MAX_SPIKE=40;
+    Spike spike[ MAX_SPIKE];
+    int spikeCount=0;
+    for(int i=0;i<MAX_SPIKE;i++) {
+    spike[i].position = {900.0f, 571.0f};
+    spike[i].width = 64;
+    spike[i].height = 16;
+    spike[i].health = 1;
+    }
 
     LaserTrap level1Lasers[4];
     LaserTrap level2Lasers[5];
@@ -198,7 +202,7 @@ int main (){
             //choose goblin number
             if(currentLevel!=prevLevel) {
                 prevLevel=currentLevel;
-                LoadLevelPositions(currentLevel,goblin,goblinCount,slime,slimeCount,spike,level1Lasers,level2Lasers,level3Lasers,level4Lasers);
+                LoadLevelPositions(currentLevel,goblin,goblinCount,slime,slimeCount,spike,spikeCount,level1Lasers,level2Lasers,level3Lasers,level4Lasers);
             }
 
             DrawLevel(maplist[currentLevel]);
@@ -238,9 +242,10 @@ int main (){
              AttackSlime(player,slime[i]);
              DrawSlime(slime[i]);
              }
-
-             UpdateSpike(spike, player);
-             DrawSpike(spike);
+             for(int i=0;i<spikeCount;i++) {
+             UpdateSpike(spike[i], player);
+             DrawSpike(spike[i]);
+             }
              //laser for levels
              if(currentLevel==0) {
              for(int i=0;i<4;i++) {

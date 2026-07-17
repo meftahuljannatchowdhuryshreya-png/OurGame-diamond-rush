@@ -1,5 +1,5 @@
  #include"position.h"
-void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime slime[],int &slimeCount,Spike &spike,LaserTrap level1Lasers[],LaserTrap level2Lasers[],LaserTrap level3Lasers[],LaserTrap level4Lasers[])
+void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime slime[],int &slimeCount,Spike spike[],int &spikeCount,LaserTrap level1Lasers[],LaserTrap level2Lasers[],LaserTrap level3Lasers[],LaserTrap level4Lasers[])
 {
             if(currentLevel==0) {
                 //level 1 lasers
@@ -31,6 +31,8 @@ void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime s
             slime[2].moveRight=false;
             slime[3].position = {564,420};//bottom right
             slime[3].moveRight=true;
+            //spike
+            spikeCount=0;
             
 
             }else if(currentLevel==1) {
@@ -71,6 +73,8 @@ void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime s
             slime[3].moveRight=true;
             slime[4].position = {650,330};//bottom right
             slime[4].moveRight=true;
+             //spike
+            spikeCount=0;
 
             }else if(currentLevel==2){
               //level 3 laser
@@ -112,6 +116,8 @@ void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime s
             slime[3].moveRight=true;
             slime[4].position = {800,272};//upper right(box)
             slime[4].moveRight=true;
+             //spike
+            spikeCount=0;
 
 
             }else if(currentLevel==3) {
@@ -124,27 +130,32 @@ void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime s
             level4Lasers[2].end={656,348};
             level4Lasers[3].start={656,452};
             level4Lasers[3].end={656,508};
-                goblinCount=8;
-            goblin[0].position = {96, 224};//upper left(2)
+                goblinCount=6;
+            goblin[0].position = {96, 80};//upper left(2)
             goblin[0].moveRight = true;
             goblin[1].position = {464, 224};
             goblin[1].moveRight = false;
 
-            goblin[2].position = {736, 128};//upper right(2)
+            goblin[2].position = {736, 86};//upper right
             goblin[2].moveRight = true;
-            goblin[3].position = {896, 128};
+
+            goblin[3].position = {848, 332};//middle right
             goblin[3].moveRight = false;
-
-            goblin[4].position = {848, 332};//middle right
-            goblin[4].moveRight = false;
-            goblin[5].position = {96, 514};//bottom left(2)
+            goblin[4].position = {96, 514};//bottom left
+            goblin[4].moveRight = true;
+            goblin[5].position = {700, 516};//bottom right
             goblin[5].moveRight = true;
-            goblin[6].position = {130,514};
-            goblin[6].moveRight=true;
-
-            goblin[7].position = {700, 516};//bottom right
-            goblin[7].moveRight = true;
             //slime
-            slimeCount=0;
+             slimeCount=4;
+            slime[0].position = {128, 196};//bottom left
+            slime[0].moveRight=true;
+            slime[1].position = {790,176};//upper right
+            slime[1].moveRight=true;
+            slime[2].position = {310,476};//bottom left
+            slime[2].moveRight=false;
+            slime[3].position = {564,420};//bottom right
+            slime[3].moveRight=true;
+             //spike
+            spikeCount=0;
             }
     }

@@ -90,7 +90,7 @@ Rectangle playerRect = {
 //player-goblin
 if (CheckCollisionRecs(playerRect, goblinRect))
 {
-    player.health-=0.5f;
+    player.health-=0.05f;
 
     if (player.health < 0)
         player.health = 0;
@@ -99,7 +99,7 @@ if (CheckCollisionRecs(playerRect, goblinRect))
 if (e.bullet.active &&
     CheckCollisionRecs(bulletRect, playerRect))
 {
-    player.health -= 1.0f;
+    player.health -= 0.1f;
 
     if (player.health < 0)
         player.health = 0;
