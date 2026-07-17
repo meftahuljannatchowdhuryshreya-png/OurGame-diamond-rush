@@ -14,12 +14,11 @@ void UpdateSlime(Slime &slime,vector<vector<int>> grid,Player &player) {
    
     int topRow=slime.position.y/TILE_SIZE;
     int bottomRow=(slime.position.y+slime.height-1)/TILE_SIZE;
-    int nextGroundRow = (slime.position.y + slime.height) / TILE_SIZE;
 //move
     if(slime.moveRight) {
       int nextRightCol=(slime.position.x+slime.speed+slime.width-1)/TILE_SIZE;
-       int nextGroundCol = (slime.position.x + slime.speed + slime.width) / TILE_SIZE;
-        if(grid[topRow][nextRightCol]!=0 || grid[bottomRow][nextRightCol]!=0 ||  grid[nextGroundRow][nextGroundCol] == 0)  {
+       if(grid[topRow][nextRightCol]!=0 ||grid[bottomRow][nextRightCol]!=0)
+       {
             slime.moveRight=false;
         }else {
             slime.position.x+=slime.speed;
@@ -27,8 +26,7 @@ void UpdateSlime(Slime &slime,vector<vector<int>> grid,Player &player) {
     }
     else {
          int nextLeftCol=(slime.position.x-slime.speed)/TILE_SIZE;
-         int nextGroundCol = (slime.position.x - slime.speed) / TILE_SIZE;
-        if(grid[topRow][nextLeftCol]!=0 || grid[bottomRow][nextLeftCol]!=0 ||  grid[nextGroundRow][nextGroundCol] == 0 ) {
+        if(grid[topRow][nextLeftCol]!=0 || grid[bottomRow][nextLeftCol]!=0) {
             slime.moveRight=true;
         }else {
              slime.position.x-=slime.speed;

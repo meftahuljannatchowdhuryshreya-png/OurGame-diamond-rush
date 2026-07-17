@@ -1,5 +1,5 @@
  #include"position.h"
-void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime &slime,Spike &spike,LaserTrap level1Lasers[],LaserTrap level2Lasers[],LaserTrap level3Lasers[],LaserTrap level4Lasers[])
+void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime slime[],int &slimeCount,Spike &spike,LaserTrap level1Lasers[],LaserTrap level2Lasers[],LaserTrap level3Lasers[],LaserTrap level4Lasers[])
 {
             if(currentLevel==0) {
                 //level 1 lasers
@@ -12,7 +12,26 @@ void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime &
                level1Lasers[3].start={755,264};
                level1Lasers[3].end={755,311};
                //goblin
-                goblinCount=0;
+                goblinCount=4;
+            goblin[0].position = {120, 440};//bottom left
+            goblin[0].moveRight=true;
+            goblin[1].position = {338,294};//upper left
+            goblin[1].moveRight=false;
+            goblin[2].position = {546, 294};//bottom right
+            goblin[2].moveRight = true;
+            goblin[3].position = {770,134};//upper right
+            goblin[3].moveRight=false;
+            //slime wont move until is not on 1
+            slimeCount=4;
+            slime[0].position = {128, 208};//bottom left
+            slime[0].moveRight=true;
+            slime[1].position = {790,176};//upper right
+            slime[1].moveRight=true;
+            slime[2].position = {310,560};//bottom left
+            slime[2].moveRight=false;
+            slime[3].position = {564,420};//bottom right
+            slime[3].moveRight=true;
+            
 
             }else if(currentLevel==1) {
                //level 2 laser
@@ -28,14 +47,30 @@ void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime &
                level2Lasers[4].end={592,472};
                //goblin
                 goblinCount=6;
-               goblin[0].position = {64, 224};   // Left upper area
-               goblin[1].position = {300, 224};  // left upper area
+               goblin[0].position = {64, 224};   // upper left
+               goblin[0].moveRight=true;
+               goblin[1].position = {300, 100};  // upper left
                goblin[1].moveRight=false;
-               goblin[2].position = {680, 230};  // Upper right
+               goblin[2].position = {680, 90};  // Upper right
+               goblin[2].moveRight=true;
                goblin[3].position = {64, 530};   // Lower left
+               goblin[3].moveRight=true;
                goblin[4].position = {200,360};  // Lower middle
+               goblin[4].moveRight=true;
                goblin[5].position = {970,230};  // upper right
                goblin[5].moveRight=false;
+               //slime
+            slimeCount=5;
+            slime[0].position = {90, 70};//upper left
+            slime[0].moveRight=true;
+            slime[1].position = {700,272};//upper right
+            slime[1].moveRight=true;
+            slime[2].position = {100, 470};//bottom left
+            slime[2].moveRight=true;
+            slime[3].position = {720,560};//lower right
+            slime[3].moveRight=true;
+            slime[4].position = {650,330};//bottom right
+            slime[4].moveRight=true;
 
             }else if(currentLevel==2){
               //level 3 laser
@@ -52,13 +87,32 @@ void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime &
                //goblin
                 goblinCount=7;
             goblin[0].position = {300, 160};//top left
+            goblin[0].moveRight=true;
             goblin[1].position = {96, 352};//middle left
-            goblin[2].position = {768, 352};//middle right
+            goblin[1].moveRight=true;
+            goblin[2].position = {768, 384};//middle right
             goblin[2].moveRight = false;
             goblin[3].position = {410, 544};//bottom left
-            goblin[4].position = {448, 544}; //bottom left
+            goblin[3].moveRight=true;
+            goblin[4].position = {448, 444}; //bottom left
+            goblin[4].moveRight=true;
             goblin[5].position = {832, 544}; //bottom right
             goblin[5].moveRight = false;
+            goblin[6].position = {512,70};//top right
+            goblin[6].moveRight=true;
+            //slime
+            slimeCount=5;
+            slime[0].position = {60, 60};//upper left
+            slime[0].moveRight=true;
+            slime[1].position = {640,208};//upper right
+            slime[1].moveRight=true;
+            slime[2].position = {100, 498};//bottom left
+            slime[2].moveRight=true;
+            slime[3].position = {512,368};//middle 
+            slime[3].moveRight=true;
+            slime[4].position = {800,272};//upper right(box)
+            slime[4].moveRight=true;
+
 
             }else if(currentLevel==3) {
            //level 4 laser
@@ -86,8 +140,11 @@ void LoadLevelPositions(int currentLevel,Enemy goblin[],int &goblinCount,Slime &
             goblin[5].position = {96, 514};//bottom left(2)
             goblin[5].moveRight = true;
             goblin[6].position = {130,514};
+            goblin[6].moveRight=true;
 
             goblin[7].position = {700, 516};//bottom right
             goblin[7].moveRight = true;
+            //slime
+            slimeCount=0;
             }
     }

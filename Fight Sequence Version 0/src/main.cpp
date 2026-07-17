@@ -53,13 +53,16 @@ int main (){
     goblin[i].attackCooldown=0;
     }
 
-    Slime slime;
-    slime.position={200.0f,560.0f};
-    slime.width=64.0f;
-    slime.height=16.0f;
-    slime.health=20.0f;
-    slime.moveRight=true;
-    slime.speed=1.5f;
+    const int MAX_SLIME=40;
+    Slime slime[ MAX_SLIME];
+    int slimeCount=0;
+    for(int i=0;i<MAX_SLIME;i++) {
+    slime[i].width=64.0f;
+    slime[i].height=16.0f;
+    slime[i].health=20.0f;
+    slime[i].moveRight=true;
+    slime[i].speed=1.5f;
+    }
 
     Spike spike;
     spike.position = {900.0f, 571.0f};
@@ -112,7 +115,10 @@ int main (){
     Enemy goblinsCopy[MAX_GOBLINS];
     for(int i=0;i<MAX_GOBLINS;i++) 
     goblinsCopy[i]=goblin[i];
-    Slime slimeCopy=slime;
+    Slime slimeCopy[MAX_SLIME];
+    for(int i=0;i<MAX_SLIME;i++) 
+    slimeCopy[i]=slime[i];
+    
 
 
     
@@ -169,7 +175,8 @@ int main (){
                for(int i=0;i<MAX_GOBLINS;i++) 
                goblin[i]=goblinsCopy[i];
                prevLevel=-1;
-                slime=slimeCopy;
+               for(int i=0;i<MAX_SLIME;i++)
+               slime[i]=slimeCopy[i];
                 gameOver = false;
                 victory = false;
                 cnt = 0;
@@ -191,7 +198,7 @@ int main (){
             //choose goblin number
             if(currentLevel!=prevLevel) {
                 prevLevel=currentLevel;
-                LoadLevelPositions(currentLevel,goblin,goblinCount,slime,spike,level1Lasers,level2Lasers,level3Lasers,level4Lasers);
+                LoadLevelPositions(currentLevel,goblin,goblinCount,slime,slimeCount,spike,level1Lasers,level2Lasers,level3Lasers,level4Lasers);
             }
 
             DrawLevel(maplist[currentLevel]);
@@ -226,10 +233,11 @@ int main (){
              AttackEnemy(player, goblin[i]);
              DrawEnemy(goblin[i]);
             }
-
-             UpdateSlime(slime,maplist[currentLevel].grid,player);
-             AttackSlime(player,slime);
-             DrawSlime(slime);
+             for(int i=0;i<slimeCount;i++) {
+             UpdateSlime(slime[i],maplist[currentLevel].grid,player);
+             AttackSlime(player,slime[i]);
+             DrawSlime(slime[i]);
+             }
 
              UpdateSpike(spike, player);
              DrawSpike(spike);

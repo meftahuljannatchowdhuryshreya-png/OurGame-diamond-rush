@@ -19,36 +19,15 @@ void UpdateEnemy(Enemy &e, vector<vector<int>> grid,Player &player) {
         e.attackCooldown--;
     }
 
-    const float GRAVITY=0.5;
     const float TILE_SIZE=32.0;
-
-    e.velocityY+=GRAVITY;
-    e.position.y+=e.velocityY;
    
     int topRow=e.position.y/TILE_SIZE;
     int bottomRow=(e.position.y+e.height-1)/TILE_SIZE;
-    
-     int leftCol=e.position.x/TILE_SIZE;
-    int rightCol=(e.position.x+e.width-1)/TILE_SIZE;
 
-    int groundRow=((e.position.y+e.height-1)/TILE_SIZE)+1;
-//gravity
-     if (grid[groundRow][leftCol] != 0 || grid[groundRow][rightCol] != 0)
-    {
-        e.position.y = groundRow * TILE_SIZE - e.height;
-        e.velocityY = 0;
-        e.onGround = true;
-    }
-    else
-    {
-        e.onGround = false;
-    }
 //move
- if(e.onGround) {
     if(e.moveRight) {
-      int nextGroundCol1=(e.position.x + e.speed + e.width)/TILE_SIZE;
       int nextRightCol=(e.position.x+e.speed+e.width-1)/TILE_SIZE;
-        if(grid[topRow][nextRightCol]!=0 || grid[bottomRow][nextRightCol]!=0 || grid[groundRow][nextGroundCol1]==0 ) {
+       if(grid[topRow][nextRightCol]!=0 ||grid[bottomRow][nextRightCol]!=0){
             e.moveRight=false;
         }else {
             e.position.x+=e.speed;
@@ -56,14 +35,12 @@ void UpdateEnemy(Enemy &e, vector<vector<int>> grid,Player &player) {
     }
     else {
          int nextLeftCol=(e.position.x-e.speed)/TILE_SIZE;
-         int nextGroundCol = (e.position.x - e.speed) / TILE_SIZE;
-        if(grid[topRow][nextLeftCol]!=0 || grid[bottomRow][nextLeftCol]!=0 ||grid[groundRow][nextGroundCol]==0  ) {
+        if(grid[topRow][nextLeftCol]!=0 ||grid[bottomRow][nextLeftCol]!=0) {
             e.moveRight=true;
         }else {
              e.position.x-=e.speed;
         }
     }
-}
 //bullet
     if(!e.bullet.active && e.attackCooldown==0) {
         e.bullet.active=true;
