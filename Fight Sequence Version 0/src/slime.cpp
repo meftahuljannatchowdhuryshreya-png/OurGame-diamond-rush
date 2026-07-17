@@ -8,6 +8,8 @@
 using namespace std;
 
 void UpdateSlime(Slime &slime,vector<vector<int>> grid,Player &player) {
+    if(slime.health <= 0)
+    return;
     const float TILE_SIZE=32.0;
    
     int topRow=slime.position.y/TILE_SIZE;
@@ -61,6 +63,8 @@ void DrawSlime(Slime slime) {
  DrawRectangle(slime.position.x,slime.position.y,slime.width,slime.height,GREEN);
 }
 void AttackSlime(Player &player,Slime &slime) {
+    if(slime.health <= 0)
+    return;
         Vector2 playerCenter={player.pos.x,player.pos.y};
         Vector2 slimeCenter={slime.position.x+slime.width/2,slime.position.y+slime.height/2};
         float distance=sqrt(pow(playerCenter.x-slimeCenter.x,2)+pow(playerCenter.y-slimeCenter.y,2));

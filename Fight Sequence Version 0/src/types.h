@@ -56,7 +56,7 @@ struct Slime
     float height;
     float health;
     bool moveRight;
-    int speed;
+    float speed;
 };
 struct Spike
 {

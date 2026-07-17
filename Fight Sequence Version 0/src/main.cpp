@@ -65,15 +65,86 @@ int main (){
     spike.height = 16;
     spike.health = 1;
 
-    LaserTrap laserTrap;
+    LaserTrap level1Lasers[4];
+    LaserTrap level2Lasers[5];
+    LaserTrap level3Lasers[5];
+    LaserTrap level4Lasers[4];
+    for(int i=0;i<4;i++){
+    level1Lasers[i].active = true;
+    level4Lasers[i].active = true;
+    
+    level1Lasers[i].onTime = 180;     // 3 sec (60 FPS) 
+    level4Lasers[i].onTime = 180;  
 
-    laserTrap.start = {500, 350};
-    laserTrap.end   = {500, 550};
-    laserTrap.active = true;
-    laserTrap.onTime = 180;     // 3 sec (60 FPS)
-    laserTrap.offTime = 120;    // 2 sec
-    laserTrap.timer = 0;
-    laserTrap.damage = 0.3f;
+    level1Lasers[i].offTime = 120;    // 2 sec
+    level4Lasers[i].offTime = 120; 
+
+    level1Lasers[i].timer = 0;
+    level4Lasers[i].timer = 0;
+
+    level1Lasers[i].damage = 0.7f;
+    level4Lasers[i].damage = 0.99f;
+//level 1 lasers
+    level1Lasers[0].start={306,452};
+    level1Lasers[0].end={306,504};
+    level1Lasers[1].start={331,240};
+    level1Lasers[1].end={408,240};
+    level1Lasers[2].start={611,368};
+    level1Lasers[2].end={665,368};
+    level1Lasers[3].start={755,264};
+    level1Lasers[3].end={755,311};
+     //level 4 laser
+    level4Lasers[0].start={528,388};
+    level4Lasers[0].end={528,476};
+    level4Lasers[1].start={656,108};
+    level4Lasers[1].end={656,188};
+    level4Lasers[2].start={656,300};
+    level4Lasers[2].end={656,380};
+    level4Lasers[3].start={656,452};
+    level4Lasers[3].end={656,508};
+    }
+
+    for(int i=0;i<5;i++)
+{
+    level2Lasers[i].active=true;
+    level3Lasers[i].active = true;
+
+    level2Lasers[i].onTime = 180; 
+    level3Lasers[i].onTime=180;
+
+    level2Lasers[i].offTime = 120;
+    level3Lasers[i].offTime=120;
+    
+    level2Lasers[i].timer = 0;
+    level3Lasers[i].timer=0;
+
+    level2Lasers[i].damage = 0.9f;
+    level3Lasers[i].damage=0.3f;
+
+    //level 2 laser
+    level2Lasers[0].start={400,172};
+    level2Lasers[0].end={400,220};
+    level2Lasers[1].start={592,172};
+    level2Lasers[1].end={592,252};
+    level2Lasers[2].start={400,300};
+    level2Lasers[2].end={400,380};
+    level2Lasers[3].start={400,490};
+    level2Lasers[3].end={400,540};
+    level2Lasers[4].start={592,388};
+    level2Lasers[4].end={592,472};
+    //level 3 laser
+    level3Lasers[0].start={326,208};
+    level3Lasers[0].end={412,208};
+    level3Lasers[1].start={432,106};
+    level3Lasers[1].end={432,156};
+    level3Lasers[2].start={708,238};
+    level3Lasers[2].end={798,238};
+    level3Lasers[3].start={900,432};
+    level3Lasers[3].end={958,432};
+    level3Lasers[4].start={134,400};
+    level3Lasers[4].end={189,400};
+    }
+ 
 
     Player playerCopy = player;
     FinalBoss bossCopy = boss;
@@ -110,7 +181,7 @@ int main (){
 
     bool gameOver = false;
     bool victory = false;
-
+    int currentLevel=0;
     Vector2 bombPos; Player p;
     Vector2 bomb2Pos, bomb3Pos;
 
@@ -140,8 +211,18 @@ int main (){
         BeginDrawing();
         ClearBackground(BLACK);
         UpdateAudio();
+        //CHANGE LEVEL
+        if(IsKeyPressed(KEY_ONE))
+        currentLevel=0;
+         if(IsKeyPressed(KEY_TWO))
+        currentLevel=1;
+         if(IsKeyPressed(KEY_THREE))
+        currentLevel=2;
+         if(IsKeyPressed(KEY_FOUR))
+        currentLevel=3;
+
         if (!gameOver && !victory){
-            DrawLevel(maplist[3]);
+            DrawLevel(maplist[currentLevel]);
             // Draw Player
             if (player.isAttacking || player.attackCooldown>0){
                 if (player.pos.x<=boss.pos.x) DrawTexture (rightAttackTexture, player.pos.x-player.size/2, player.pos.y-player.size/2, WHITE);
@@ -151,62 +232,89 @@ int main (){
                 DrawTexture (noAttackTexture, player.pos.x-player.size/2, player.pos.y-player.size/2, WHITE);
             }
             // Draw Boss
+            if(currentLevel==3 ) {
             DrawTexture(bossTexture, boss.pos.x, boss.pos.y, WHITE);
-            UpdatePlayer(player, maplist[3].grid);
+            }
+            UpdatePlayer(player, maplist[currentLevel].grid);
             
            
             // Laser Attack
-            if (cnt < 60) {
+
+            if (cnt < 60 && currentLevel==3) {
                 Laser(p, player, boss); // Call the Laser function to draw the laser attack
             }
-            UpdateBoss(player, boss, maplist[3].grid);
+            if(currentLevel==3) {
+            UpdateBoss(player, boss, maplist[currentLevel].grid);
             // Attacking the Boss
             AttackBoss(player, boss);
+            }
             //enemy
-             UpdateEnemy(goblin,maplist[3].grid,player);
+             UpdateEnemy(goblin,maplist[currentLevel].grid,player);
              AttackEnemy(player, goblin);
              DrawEnemy(goblin);
 
-             UpdateSlime(slime,maplist[3].grid,player);
+             UpdateSlime(slime,maplist[currentLevel].grid,player);
              AttackSlime(player,slime);
              DrawSlime(slime);
 
              UpdateSpike(spike, player);
              DrawSpike(spike);
-
-             UpdateLaserTrap(laserTrap, player);
-             DrawLaserTrap(laserTrap);
+             //laser for levels
+             if(currentLevel==0) {
+             for(int i=0;i<4;i++) {
+             UpdateLaserTrap(level1Lasers[i], player);
+             DrawLaserTrap(level1Lasers[i]);
+             }
+            }else if(currentLevel==1) {
+                 for(int i=0;i<5;i++) {
+             UpdateLaserTrap(level2Lasers[i], player);
+             DrawLaserTrap(level2Lasers[i]);
+             } 
+            } else if(currentLevel==2) {
+                  for(int i=0;i<5;i++) {
+             UpdateLaserTrap(level3Lasers[i], player);
+             DrawLaserTrap(level3Lasers[i]);
+             }
+            } else if(currentLevel==3) {
+                  for(int i=0;i<4;i++) {
+             UpdateLaserTrap(level4Lasers[i], player);
+             DrawLaserTrap(level4Lasers[i]);
+             }
+            }
             // Draw Bomb
-            if (cnt<150){
-                if (!CheckWallIntersection({bombPos.x+tile/2, bombPos.y+tile/2}, maplist[3].grid, tile)){
+            if (cnt<150 && currentLevel==3){
+                if (!CheckWallIntersection({bombPos.x+tile/2, bombPos.y+tile/2}, maplist[currentLevel].grid, tile)){
                 DrawTexture(bombtexture, bombPos.x, bombPos.y, WHITE); 
                 }
-                if (boss.health<=100 && !CheckWallIntersection({bomb2Pos.x+tile/2, bomb2Pos.y+tile/2}, maplist[3].grid, tile)){
+                if (boss.health<=100 && !CheckWallIntersection({bomb2Pos.x+tile/2, bomb2Pos.y+tile/2}, maplist[currentLevel].grid, tile)){
                 DrawTexture(bombtexture, bomb2Pos.x, bomb2Pos.y, WHITE); 
                 }
-                if (boss.health<=50 && !CheckWallIntersection({bomb3Pos.x+tile/2, bomb3Pos.y+tile/2}, maplist[3].grid, tile)){
+                if (boss.health<=50 && !CheckWallIntersection({bomb3Pos.x+tile/2, bomb3Pos.y+tile/2}, maplist[currentLevel].grid, tile)){
                 DrawTexture(bombtexture, bomb3Pos.x, bomb3Pos.y, WHITE); 
                 } 
             }
 
             // Simulate Bomb Explosion
-            if (cnt==150){
-                if (!CheckWallIntersection({bombPos.x+tile/2, bombPos.y+tile/2}, maplist[3].grid, tile)){
+            if (cnt==150 && currentLevel==3){
+                if (!CheckWallIntersection({bombPos.x+tile/2, bombPos.y+tile/2}, maplist[currentLevel].grid, tile)){
                     Bomb(bombPos, player);
                 }
-                if (boss.health<=100 && !CheckWallIntersection({bomb2Pos.x+tile/2, bomb2Pos.y+tile/2}, maplist[3].grid, tile)){
+                if (boss.health<=100 && !CheckWallIntersection({bomb2Pos.x+tile/2, bomb2Pos.y+tile/2}, maplist[currentLevel].grid, tile)){
                     Bomb(bomb2Pos, player);
                 }
-                if (boss.health<=50 && !CheckWallIntersection({bomb3Pos.x+tile/2, bomb3Pos.y+tile/2}, maplist[3].grid, tile)){
+                if (boss.health<=50 && !CheckWallIntersection({bomb3Pos.x+tile/2, bomb3Pos.y+tile/2}, maplist[currentLevel].grid, tile)){
                     Bomb(bomb3Pos, player);
                 }
             }
         }
         // Health
         DrawText(TextFormat("XP: %.1f", player.health), 20, 20, 30, GREEN);
+        if(currentLevel==3)
         DrawText(TextFormat("Boss HP: %.1f", boss.health), 20, 60, 30, BLUE);
         if (player.health<=0) gameOver = true;
-        else if (boss.health<=0) victory = true;
+        if(currentLevel==3) {
+        if (boss.health<=0) victory = true;
+        }
         if (gameOver)
         {
             DrawText("GAME OVER", 240, 150, 50, RED);
