@@ -3,6 +3,10 @@
 #include "types.h"
 #include "player.h"
 #include "boss.h"
+#include "enemy.h"
+#include "slime.h"
+#include "spike.h"
+#include "laser.h"
 #include "raylib.h"
 #include "audio.h"
 using namespace std;
@@ -31,8 +35,50 @@ int main (){
     boss.health = 200.0f;
     boss.size = 32.0f;
 
+    Enemy goblin;
+    goblin.position={235.0f,235.0f};
+    goblin.width=16.0f;
+    goblin.height=32.0f;
+    goblin.speed=1.0f;
+    goblin.health=50.0f;
+    goblin.velocityY=0;
+    goblin.onGround=false;
+    goblin.moveRight=true;
+    goblin.bullet.active=false;
+    goblin.bullet.speed=8;
+    goblin.bullet.active=false;
+    goblin.bullet.speed=7;
+    goblin.bullet.damage=0.5f;
+    goblin.attackCooldown=0;
+
+    Slime slime;
+    slime.position={200.0f,560.0f};
+    slime.width=64.0f;
+    slime.height=16.0f;
+    slime.health=20.0f;
+    slime.moveRight=true;
+    slime.speed=1.5f;
+
+    Spike spike;
+    spike.position = {900.0f, 571.0f};
+    spike.width = 64;
+    spike.height = 16;
+    spike.health = 1;
+
+    LaserTrap laserTrap;
+
+    laserTrap.start = {500, 350};
+    laserTrap.end   = {500, 550};
+    laserTrap.active = true;
+    laserTrap.onTime = 180;     // 3 sec (60 FPS)
+    laserTrap.offTime = 120;    // 2 sec
+    laserTrap.timer = 0;
+    laserTrap.damage = 0.3f;
+
     Player playerCopy = player;
     FinalBoss bossCopy = boss;
+    Enemy goblinCopy=goblin;
+    Slime slimeCopy=slime;
 
 
     
@@ -85,6 +131,8 @@ int main (){
             {
                 player = playerCopy;
                 boss = bossCopy;
+                goblin=goblinCopy;
+                slime=slimeCopy;
                 gameOver = false;
                 victory = false;
                 cnt = 0;
@@ -105,6 +153,8 @@ int main (){
             // Draw Boss
             DrawTexture(bossTexture, boss.pos.x, boss.pos.y, WHITE);
             UpdatePlayer(player, maplist[3].grid);
+            
+           
             // Laser Attack
             if (cnt < 60) {
                 Laser(p, player, boss); // Call the Laser function to draw the laser attack
@@ -112,7 +162,20 @@ int main (){
             UpdateBoss(player, boss, maplist[3].grid);
             // Attacking the Boss
             AttackBoss(player, boss);
+            //enemy
+             UpdateEnemy(goblin,maplist[3].grid,player);
+             AttackEnemy(player, goblin);
+             DrawEnemy(goblin);
 
+             UpdateSlime(slime,maplist[3].grid,player);
+             AttackSlime(player,slime);
+             DrawSlime(slime);
+
+             UpdateSpike(spike, player);
+             DrawSpike(spike);
+
+             UpdateLaserTrap(laserTrap, player);
+             DrawLaserTrap(laserTrap);
             // Draw Bomb
             if (cnt<150){
                 if (!CheckWallIntersection({bombPos.x+tile/2, bombPos.y+tile/2}, maplist[3].grid, tile)){

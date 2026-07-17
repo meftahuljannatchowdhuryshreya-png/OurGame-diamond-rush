@@ -28,4 +28,52 @@ struct FinalBoss {
     float health;
     float size;
 };
+struct Bullet
+{
+    Vector2 position;
+    float speed;
+    bool active;
+    float damage;
+    float direction;
+};
+struct Enemy
+{
+    Vector2 position;
+    float width;
+    float height;
+    float speed;
+    int health;
+    bool moveRight;
+    float velocityY;
+    bool onGround;
+    Bullet bullet;
+    int attackCooldown;
+};
+struct Slime
+{
+    Vector2 position;
+    float width;
+    float height;
+    float health;
+    bool moveRight;
+    int speed;
+};
+struct Spike
+{
+    Vector2 position;
+    float width;
+    float height;
+    float health;
+};
+struct LaserTrap
+{
+    Vector2 start;
+    Vector2 end;
+    bool active;
+    int onTime;
+    int offTime;
+    int timer;
+    float damage;
+};
+
 #endif
