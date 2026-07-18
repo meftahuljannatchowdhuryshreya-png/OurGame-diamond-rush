@@ -335,6 +335,7 @@ void Menu::SelectItem()
   {
 
     if(currentScreen == MenuScreen::TUTORIAL ||
+       currentScreen == MenuScreen::CONTROLS ||
        currentScreen == MenuScreen::CREDITS)
     {
         SetScreen(MenuScreen::OPTIONS);
