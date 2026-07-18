@@ -106,4 +106,44 @@ struct Hornet
     bool xpGiven;
 };
 
+enum class MenuScreen
+{
+    MAIN_MENU,
+    OPTIONS,
+    SETTINGS,
+    SCOREBOARD,
+    PAUSE_MENU
+};
+
+
+// Actions sent from Menu to Game
+enum class MenuAction
+{
+    NONE,
+
+    // Main menu actions
+    NEW_GAME,
+    CONTINUE_GAME,
+    OPEN_OPTIONS,
+    OPEN_SETTINGS,
+    OPEN_SCOREBOARD,
+    QUIT_GAME,
+
+    // Options actions
+    SHOW_CONTROLS,
+    SHOW_TUTORIAL,
+    SHOW_CREDITS,
+
+    // Settings actions
+    CHANGE_MUSIC_VOLUME,
+    CHANGE_SFX_VOLUME,
+    TOGGLE_FULLSCREEN,
+
+    // Pause menu actions
+    RESUME_GAME,
+    RESTART_GAME,
+    EXIT_TO_MAIN_MENU
+};
+
+
 #endif
