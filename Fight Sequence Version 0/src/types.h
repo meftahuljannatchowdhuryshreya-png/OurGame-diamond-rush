@@ -109,9 +109,14 @@ struct Hornet
 enum class MenuScreen
 {
     MAIN_MENU,
+
     OPTIONS,
+    TUTORIAL,
+    CREDITS,
+
     SETTINGS,
     SCOREBOARD,
+
     PAUSE_MENU
 };
 
