@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 #include "map.h"
+#include "tiledmap.h"
 #include "types.h"
 #include "player.h"
 #include "boss.h"
