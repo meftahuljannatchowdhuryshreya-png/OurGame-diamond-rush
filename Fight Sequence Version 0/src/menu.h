@@ -46,6 +46,8 @@ private:
     // Load menu contents
     void LoadMainMenu();
     void LoadOptionsMenu();
+    void LoadTutorialMenu();
+    void LoadCreditsMenu();
     void LoadSettingsMenu();
     void LoadScoreboardMenu();
     void LoadPauseMenu();
