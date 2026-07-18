@@ -58,7 +58,7 @@ int main (){
         }
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawTileMap(tileset); // Draw the fourth level in the maplist
+        DrawTiledMap(); // Draw the fourth level in the maplist
         DrawCircle(player.pos.x, player.pos.y, player.size/2, YELLOW); // Draw the player as a yellow circle
         DrawRectangle(boss.pos.x, boss.pos.y, boss.size, boss.size, RED); // Draw the boss as a red square
         //DrawTexture(bossTexture, boss.pos.x, boss.pos.y, WHITE);
@@ -79,7 +79,7 @@ int main (){
 
         EndDrawing();
     }
-    UnloadTexture(tileset);
+   UnloadTiledMap();
 CloseWindow();
 
 return 0;
