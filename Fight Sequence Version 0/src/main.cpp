@@ -8,6 +8,7 @@
 #include "spike.h"
 #include "laser.h"
 #include "position.h"
+#include "upgrade.h"
 #include "raylib.h"
 #include "audio.h"
 using namespace std;
@@ -30,11 +31,17 @@ int main (){
     player.attackCooldown = 60; //cooldown time in frames
     player.health = 100.0f;
 
+    player.xp=0;
+    player.maxXp=100;
+    player.level=1;
+    player.damage=10.0f; 
+
     FinalBoss boss;
     boss.pos = {200.0f, 200.0f};
     boss.speed = 2.0f;
     boss.health = 200.0f;
     boss.size = 32.0f;
+    boss.xpGiven=false;
 
     const int MAX_GOBLINS=40;
     Enemy goblin[ MAX_GOBLINS];
@@ -51,6 +58,7 @@ int main (){
     goblin[i].bullet.speed=7;
     goblin[i].bullet.damage=0.5f;
     goblin[i].attackCooldown=0;
+    goblin[i].xpGiven=false;
     }
 
     const int MAX_SLIME=40;
@@ -62,6 +70,7 @@ int main (){
     slime[i].health=20.0f;
     slime[i].moveRight=true;
     slime[i].speed=0.5f;
+    slime[i].xpGiven=false;
     }
 
     const int MAX_SPIKE=40;
@@ -112,6 +121,11 @@ int main (){
     level2Lasers[i].damage = 0.9f;
     level3Lasers[i].damage=0.3f;
     }
+
+    HealthBoost healthboost;
+    healthboost.size=20;
+    healthboost.boost=5;
+    healthboost.active=false;
  
 
     Player playerCopy = player;
@@ -219,6 +233,7 @@ int main (){
             DrawTexture(bossTexture, boss.pos.x, boss.pos.y, WHITE);
             }
             UpdatePlayer(player, maplist[currentLevel].grid);
+            UpdateXP(player);
             
            
             // Laser Attack
@@ -230,17 +245,33 @@ int main (){
             UpdateBoss(player, boss, maplist[currentLevel].grid);
             // Attacking the Boss
             AttackBoss(player, boss);
+            if(boss.health<=0 && !boss.xpGiven) {
+                player.xp+=100;
+                boss.xpGiven=true;
             }
+            }
+            //health boost
+            SpawnHealthBoost(player, healthboost, currentLevel, maplist[currentLevel].grid);
+            UpdateHealthBoost(player, healthboost);
+            DrawHealthBoost(healthboost);
             //enemy
             for(int i=0;i<goblinCount;i++) {
              UpdateEnemy(goblin[i],maplist[currentLevel].grid,player);
              AttackEnemy(player, goblin[i]);
              DrawEnemy(goblin[i]);
+             if(goblin[i].health<=0 && !goblin[i].xpGiven) {
+                player.xp+=10;
+                goblin[i].xpGiven=true;
+            }
             }
              for(int i=0;i<slimeCount;i++) {
              UpdateSlime(slime[i],maplist[currentLevel].grid,player);
              AttackSlime(player,slime[i]);
              DrawSlime(slime[i]);
+             if(slime[i].health<=0 && !slime[i].xpGiven) {
+                player.xp+=5;
+                slime[i].xpGiven=true;
+            }
              }
              for(int i=0;i<spikeCount;i++) {
              UpdateSpike(spike[i], player);
@@ -296,6 +327,7 @@ int main (){
         }
         // Health
         DrawText(TextFormat("XP: %.1f", player.health), 20, 20, 30, GREEN);
+        DrawXPBar(player);
         if(currentLevel==3)
         DrawText(TextFormat("Boss HP: %.1f", boss.health), 20, 60, 30, BLUE);
         if (player.health<=0) gameOver = true;

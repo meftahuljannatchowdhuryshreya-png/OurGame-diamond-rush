@@ -126,7 +126,7 @@ void AttackBoss (Player &player, FinalBoss &boss){
     float distance = sqrt(pow(playerCenter.x - bossCenter.x, 2) + pow(playerCenter.y - bossCenter.y, 2));
 
     if (distance <= player.attackRange && player.isAttacking) {
-        boss.health -= 10.0f; // Reduce the boss's health by 10
+        boss.health -= player.damage; // Reduce the boss's health by 10
         if (boss.health < 0)
             boss.health = 0;
     }

@@ -20,6 +20,11 @@ struct Player {
     int attackCooldown;
     
     float health;
+     float xp;
+    float maxXp;
+    int level;
+    float damage;
+
 };
 
 struct FinalBoss {
@@ -27,6 +32,7 @@ struct FinalBoss {
     float speed;
     float health;
     float size;
+    bool xpGiven;
 };
 struct Bullet
 {
@@ -49,6 +55,7 @@ struct Enemy
     bool onGround;
     Bullet bullet;
     int attackCooldown;
+    bool xpGiven;
 };
 struct Slime
 {
@@ -58,6 +65,7 @@ struct Slime
     float health;
     bool moveRight;
     float speed;
+    bool xpGiven;
 };
 struct Spike
 {
@@ -75,6 +83,13 @@ struct LaserTrap
     int offTime;
     int timer;
     float damage;
+};
+struct HealthBoost
+{
+    Vector2 position;
+    float size;
+    float boost;
+    bool active;
 };
 
 #endif

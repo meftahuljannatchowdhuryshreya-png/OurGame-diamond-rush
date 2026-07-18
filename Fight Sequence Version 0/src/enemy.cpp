@@ -127,7 +127,7 @@ void DrawEnemy(Enemy e) {
         Vector2 goblinCenter={goblin.position.x+goblin.width/2,goblin.position.y+goblin.height/2};
         float distance=sqrt(pow(playerCenter.x-goblinCenter.x,2)+pow(playerCenter.y-goblinCenter.y,2));
         if(distance<=player.attackRange && player.isAttacking && player.attackTick==player.attackDuration-1){
-            goblin.health-=10.0f;
+            goblin.health-=player.damage;
             if(goblin.health<0){
                 goblin.health=0;
             }

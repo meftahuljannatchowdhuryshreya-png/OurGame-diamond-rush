@@ -67,7 +67,7 @@ void AttackSlime(Player &player,Slime &slime) {
         Vector2 slimeCenter={slime.position.x+slime.width/2,slime.position.y+slime.height/2};
         float distance=sqrt(pow(playerCenter.x-slimeCenter.x,2)+pow(playerCenter.y-slimeCenter.y,2));
         if(distance<=player.attackRange && player.isAttacking && player.attackTick==player.attackDuration-1){
-            slime.health-=10.0f;
+            slime.health-=player.damage;
             if(slime.health<0){
                 slime.health=0;
             }
