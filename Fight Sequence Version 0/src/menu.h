@@ -2,110 +2,61 @@
 #define MENU_H
 
 #include "raylib.h"
+#include "types.h"
+
 #include <vector>
 #include <string>
 
-// Different screens inside the menu system
-enum class MenuScreen
-{
-    MAIN_MENU,
-    OPTIONS,
-    SETTINGS,
-    SCOREBOARD,
-    PAUSE_MENU
-};
-
-
-// Actions that the Game class will receive
-enum class MenuAction
-{
-    NONE,
-
-    // Main menu actions
-    NEW_GAME,
-    CONTINUE_GAME,
-    OPEN_OPTIONS,
-    OPEN_SETTINGS,
-    OPEN_SCOREBOARD,
-    QUIT_GAME,
-
-    // Options actions
-    SHOW_CONTROLS,
-    SHOW_TUTORIAL,
-    SHOW_CREDITS,
-
-    // Settings actions
-    CHANGE_MUSIC_VOLUME,
-    CHANGE_SFX_VOLUME,
-    TOGGLE_FULLSCREEN,
-
-    // Pause menu actions
-    RESUME_GAME,
-    RESTART_GAME,
-    EXIT_TO_MAIN_MENU
-};
-
 class Menu
 {
-
 public:
-
     Menu();
 
-
-    // Update menu input
+    // Update keyboard input
     void Update();
-    // Draw menu on screen
+    // Draw menu
     void Draw();
-    // Change between menus
+    // Change menu screen
     void SetScreen(MenuScreen screen);
-    // Get current menu
+    // Get current screen
     MenuScreen GetScreen() const;
-    // Get what player selected
+    // Get selected action
     MenuAction GetAction();
-    // Reset action after Game handles it
+    // Reset action
     void ClearAction();
-    // Used by Game when player presses pause
+    // Open pause menu
     void OpenPauseMenu();
     // Settings values
-
     float musicVolume;
     float sfxVolume;
 
     bool fullscreen;
 
 private:
+
     MenuScreen currentScreen;
     MenuAction currentAction;
 
-    // Current selected option
+    // Currently selected item
     int selectedItem;
 
-    // Items displayed in current menu
+    // Menu options
     std::vector<std::string> items;
 
     // Load menu contents
-
     void LoadMainMenu();
-
     void LoadOptionsMenu();
-
     void LoadSettingsMenu();
-
     void LoadScoreboardMenu();
-
     void LoadPauseMenu();
 
-    // Handle selection
-
+    // Handle ENTER selection
     void SelectItem();
 
-    // Draw helpers
-
+    // Drawing helpers
     void DrawTitle();
-
     void DrawItems();
-
 };
+
 
 #endif
