@@ -117,7 +117,7 @@ void Menu::LoadCreditsMenu()
 {
     items =
     {
-        "ADVENTURE GAME",
+        "ADVENTURE GAME:Demon's Tower",
         "",
         "Developed By:",
         "Mahdi Mahi",
