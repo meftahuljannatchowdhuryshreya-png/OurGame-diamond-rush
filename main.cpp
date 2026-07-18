@@ -13,8 +13,7 @@ int main (){
     float tile = 32.0f;
     InitWindow(screenWidth, screenHeight, "Game");
     SetTargetFPS(60);
-    Texture2D tileset = LoadTexture("assets/tilesets/ChatGPT Image Jul 17, 2026, 10_46_00 PM.png");
-int tilesetColumns = tileset.width / 32;
+    LoadTiledMap("src/level1.tmj");
     
     Levelconfig();
     Player player;
