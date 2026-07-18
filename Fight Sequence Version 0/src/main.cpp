@@ -7,6 +7,7 @@
 #include "slime.h"
 #include "spike.h"
 #include "laser.h"
+#include "hornet.h"
 #include "position.h"
 #include "upgrade.h"
 #include "raylib.h"
@@ -35,6 +36,19 @@ int main (){
     player.maxXp=100;
     player.level=1;
     player.damage=10.0f; 
+
+    Hornet hornet; //level 2 boss
+    hornet.position={64,224};
+    hornet.width = 32;
+    hornet.height = 32;
+    hornet.normalSpeed = 1.5f;
+    hornet.dashSpeed = 5.0f;
+    hornet.isDashing = false;
+    hornet.dashCooldown = 60;
+    hornet.dashTime = 0;
+    hornet.health = 300.0f;
+    hornet.xpGiven = false;
+
 
     FinalBoss boss;
     boss.pos = {200.0f, 200.0f};
@@ -124,12 +138,12 @@ int main (){
 
     HealthBoost healthboost;
     healthboost.size=20;
-    healthboost.boost=5;
     healthboost.active=false;
  
 
     Player playerCopy = player;
     FinalBoss bossCopy = boss;
+    Hornet hornetCopy=hornet;
     Enemy goblinsCopy[MAX_GOBLINS];
     for(int i=0;i<MAX_GOBLINS;i++) 
     goblinsCopy[i]=goblin[i];
@@ -190,11 +204,13 @@ int main (){
             {
                 player = playerCopy;
                 boss = bossCopy;
+                hornet=hornetCopy;
                for(int i=0;i<MAX_GOBLINS;i++) 
                goblin[i]=goblinsCopy[i];
                prevLevel=-1;
                for(int i=0;i<MAX_SLIME;i++)
                slime[i]=slimeCopy[i];
+               healthboost.active=false;
                 gameOver = false;
                 victory = false;
                 cnt = 0;
@@ -240,6 +256,15 @@ int main (){
 
             if (cnt < 60 && currentLevel==3) {
                 Laser(p, player, boss); // Call the Laser function to draw the laser attack
+            }
+            if(currentLevel==1) {
+            UpdateHornet(player,hornet, maplist[currentLevel].grid);
+            AttackHornet(player, hornet);
+             if(hornet.health<=0 && !hornet.xpGiven) {
+                player.xp+=50;
+                hornet.xpGiven=true;
+            }
+            DrawHornet(hornet);
             }
             if(currentLevel==3) {
             UpdateBoss(player, boss, maplist[currentLevel].grid);

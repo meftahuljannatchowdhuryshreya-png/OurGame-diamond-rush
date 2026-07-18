@@ -91,5 +91,19 @@ struct HealthBoost
     float boost;
     bool active;
 };
+struct Hornet
+{
+    Vector2 position;
+    float width;
+    float height;
+    float normalSpeed;
+    float dashSpeed;
+    bool isDashing;
+    int dashCooldown;
+    int dashTime;
+    Vector2 dashDirection;
+    int health;
+    bool xpGiven;
+};
 
 #endif

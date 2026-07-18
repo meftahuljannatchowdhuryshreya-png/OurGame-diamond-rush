@@ -21,8 +21,8 @@ void SpawnHealthBoost(Player &player,HealthBoost &boost, int currentLevel,vector
     int playerRow=player.pos.y/32;
     int playerCol=player.pos.x/32;
     while(true) {
-        int row=GetRandomValue(playerRow - 7, playerRow + 7);
-        int col=GetRandomValue(playerCol - 7, playerCol + 7);
+        int row=GetRandomValue(playerRow - 5, playerRow + 5);
+        int col=GetRandomValue(playerCol - 5, playerCol + 5);
         if(row < 0) row = 0;
         if(row >=(int)grid.size()) row =(int)grid.size() - 1;
         if(col < 0) col = 0;
@@ -30,6 +30,9 @@ void SpawnHealthBoost(Player &player,HealthBoost &boost, int currentLevel,vector
         if(grid[row][col]==0) {
             boost.position.x=col*32;
             boost.position.y=row*32;
+            int minBoost=1+(currentLevel)*2;
+            int maxBoost=5+(currentLevel)*5;
+            boost.boost=GetRandomValue(minBoost,maxBoost);
             boost.active=true;
             break;
         }
