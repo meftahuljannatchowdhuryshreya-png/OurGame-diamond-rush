@@ -11,8 +11,8 @@ Menu::Menu()
     currentAction = MenuAction::NONE;
     selectedItem = 0;
 
-    musicVolume = 80;
-    sfxVolume = 80;
+    musicVolume = 100;
+    sfxVolume = 100;
   
     fullscreen = false;
 
