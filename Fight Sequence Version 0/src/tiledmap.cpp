@@ -18,7 +18,8 @@ int columns;
 
 void LoadTiledMap(const char* filename)
 {
-
+     // Clear the previous map's layers
+    tiles.clear();
     std::ifstream file(filename);
 
     json data;
