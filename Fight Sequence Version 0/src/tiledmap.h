@@ -2,23 +2,14 @@
 #define TILEDMAP_H
 
 #include "raylib.h"
-
-// Your Tiled map size
-constexpr int TILE_MAP_WIDTH = 32;
-constexpr int TILE_MAP_HEIGHT = 20;
-
-constexpr int TILE_SIZE = 32;
+#include <vector>
 
 
-// Load tileset image
-void LoadTiledMap();
+void LoadTiledMap(const char* filename);
 
-
-// Draw the map
 void DrawTiledMap();
 
-
-// Free memory
 void UnloadTiledMap();
+
 
 #endif
