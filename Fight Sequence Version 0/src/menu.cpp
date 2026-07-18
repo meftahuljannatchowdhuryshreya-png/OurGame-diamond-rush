@@ -361,7 +361,7 @@ void Menu::Draw()
 void Menu::DrawTitle()
 {
     DrawText(
-        "ADVENTURE GAME:Demon's tower",
+        "ADVENTURE GAME:Demon's Tower",
         260,
         80,
         40,
