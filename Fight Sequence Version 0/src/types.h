@@ -106,4 +106,36 @@ struct Hornet
     bool xpGiven;
 };
 
+#ifndef TYPES_H
+#define TYPES_H
+
+// Menu screens
+enum class MenuScreen
+{
+    MAIN_MENU,
+    OPTIONS,
+    SETTINGS,
+    SCOREBOARD,
+    PAUSE_MENU
+};
+
+enum class MenuAction
+{
+    NONE,
+
+    NEW_GAME,
+    CONTINUE_GAME,
+
+    SHOW_CONTROLS,
+    SHOW_TUTORIAL,
+    SHOW_CREDITS,
+
+    RESUME_GAME,
+    RESTART_GAME,
+    EXIT_TO_MAIN_MENU,
+
+    QUIT_GAME
+};
+
+
 #endif
