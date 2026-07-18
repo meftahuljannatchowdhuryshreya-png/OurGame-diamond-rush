@@ -1,5 +1,4 @@
 #include "tiledmap.h"
-
 #include "../include/json.hpp"
 
 #include <fstream>
@@ -43,10 +42,8 @@ void LoadTiledMap(const char* filename)
         if(!layer.contains("data"))
             continue;
 
-
         std::vector<int> layerTiles;
-
-
+         
         for(auto t : layer["data"])
         {
             layerTiles.push_back(t);
@@ -54,27 +51,20 @@ void LoadTiledMap(const char* filename)
 
         tiles.push_back(layerTiles);
     }
-
 }
 
 void DrawTiledMap()
 {
-
     for(int y = 0; y < mapHeight; y++)
     {
-
         for(int x = 0; x < mapWidth; x++)
         {
-
             // Draw every layer
             for(auto &layer : tiles)
             {
-
                 int gid = layer[y * mapWidth + x];
-
                 if(gid == 0)
                     continue;
-
                 int id = gid - 1;
 
                 Rectangle source =
@@ -85,8 +75,6 @@ void DrawTiledMap()
                     tileSize
                 };
 
-
-
                 Rectangle dest =
                 {
                     (float)(x * tileSize),
@@ -94,8 +82,6 @@ void DrawTiledMap()
                     tileSize,
                     tileSize
                 };
-
-
 
                 DrawTexturePro(
                     tileset,
@@ -105,18 +91,12 @@ void DrawTiledMap()
                     0,
                     WHITE
                 );
-
             }
-
         }
-
     }
-
 }
 
 void UnloadTiledMap()
 {
-
     UnloadTexture(tileset);
-
 }
