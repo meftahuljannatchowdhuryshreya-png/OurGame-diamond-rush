@@ -34,6 +34,15 @@ void Menu::SetScreen(MenuScreen screen)
             LoadOptionsMenu();
             break;
 
+        case MenuScreen::TUTORIAL:
+            LoadTutorialMenu();
+            break;
+
+
+        case MenuScreen::CREDITS:
+            LoadCreditsMenu();
+            break;
+
         case MenuScreen::SETTINGS:
             LoadSettingsMenu();
             break;
@@ -88,6 +97,33 @@ void Menu::LoadOptionsMenu()
         "Controls",
         "Tutorial",
         "Credits",
+        "Back"
+    };
+}
+
+void Menu::LoadTutorialMenu()
+{
+    items =
+    {
+        "WASD : Move Player",
+        "SPACE : Attack",
+        "E : Open Chest",
+        "ESC : Pause",
+        "Back"
+    };
+}
+
+void Menu::LoadCreditsMenu()
+{
+    items =
+    {
+        "ADVENTURE GAME",
+        "",
+        "Developed By:",
+        "Mahdi Mahi",
+        "Meftahul Jannat Chowdhury",
+        "Nafisa Tasnim Apsora",
+        "",
         "Back"
     };
 }
@@ -201,14 +237,24 @@ void Menu::Update()
     }
 
     // Escape goes back
-    if(IsKeyPressed(KEY_ESCAPE))
-    {
+   if(IsKeyPressed(KEY_ESCAPE))
+  {
 
-        if(currentScreen != MenuScreen::MAIN_MENU)
-        {
-            SetScreen(MenuScreen::MAIN_MENU);
-        }
+    if(currentScreen == MenuScreen::OPTIONS ||
+       currentScreen == MenuScreen::SETTINGS ||
+       currentScreen == MenuScreen::SCOREBOARD)
+    {
+        SetScreen(MenuScreen::MAIN_MENU);
     }
+
+
+    else if(currentScreen == MenuScreen::TUTORIAL ||
+            currentScreen == MenuScreen::CREDITS)
+    {
+        SetScreen(MenuScreen::OPTIONS);
+    }
+
+  }
 }
 
 void Menu::SelectItem()
@@ -256,12 +302,13 @@ void Menu::SelectItem()
 
     else if(choice == "Tutorial")
     {
-        currentAction = MenuAction::SHOW_TUTORIAL;
+        SetScreen(MenuScreen::TUTORIAL);
     }
+
 
     else if(choice == "Credits")
     {
-        currentAction = MenuAction::SHOW_CREDITS;
+        SetScreen(MenuScreen::CREDITS);
     }
 
     // PAUSE MENU
@@ -284,10 +331,20 @@ void Menu::SelectItem()
     // BACK
 
     else if(choice == "Back")
+  {
+
+    if(currentScreen == MenuScreen::TUTORIAL ||
+       currentScreen == MenuScreen::CREDITS)
+    {
+        SetScreen(MenuScreen::OPTIONS);
+    }
+
+    else
     {
         SetScreen(MenuScreen::MAIN_MENU);
     }
 
+  }
 }
 
 void Menu::Draw()
