@@ -7,11 +7,11 @@
 #include "slime.h"
 #include "spike.h"
 #include "laser.h"
-#include "hornet.h"
 #include "position.h"
 #include "upgrade.h"
 #include "raylib.h"
 #include "audio.h"
+#include "tiledmap.h"
 using namespace std;
 
 int main (){
@@ -20,6 +20,7 @@ int main (){
     InitWindow(screenWidth, screenHeight, "Game");
     InitAudio();
     SetTargetFPS(60);
+    LoadTiledMap("src/levelno1.tmj");
     Levelconfig();
     Player player;
     player.pos = {480.0f, 448.0f};
@@ -36,19 +37,6 @@ int main (){
     player.maxXp=100;
     player.level=1;
     player.damage=10.0f; 
-
-    Hornet hornet; //level 2 boss
-    hornet.position={64,224};
-    hornet.width = 32;
-    hornet.height = 32;
-    hornet.normalSpeed = 1.5f;
-    hornet.dashSpeed = 5.0f;
-    hornet.isDashing = false;
-    hornet.dashCooldown = 60;
-    hornet.dashTime = 0;
-    hornet.health = 300.0f;
-    hornet.xpGiven = false;
-
 
     FinalBoss boss;
     boss.pos = {200.0f, 200.0f};
@@ -138,12 +126,12 @@ int main (){
 
     HealthBoost healthboost;
     healthboost.size=20;
+    healthboost.boost=5;
     healthboost.active=false;
  
 
     Player playerCopy = player;
     FinalBoss bossCopy = boss;
-    Hornet hornetCopy=hornet;
     Enemy goblinsCopy[MAX_GOBLINS];
     for(int i=0;i<MAX_GOBLINS;i++) 
     goblinsCopy[i]=goblin[i];
@@ -180,6 +168,16 @@ int main (){
     Texture2D rightAttackTexture = LoadTextureFromImage(rightAttack);
     UnloadImage(rightAttack);
 
+    Image slimeImage = LoadImage("slime.png");
+    ImageResize(&slimeImage, 64, 16);
+    Texture2D slimeTexture = LoadTextureFromImage(slimeImage);
+    UnloadImage(slimeImage);
+
+    Image goblinImage = LoadImage("goblin.png");
+    ImageResize(&goblinImage, 16, 32);
+    Texture2D goblinTexture = LoadTextureFromImage(goblinImage);
+    UnloadImage(goblinImage);
+
     bool gameOver = false;
     bool victory = false;
     int currentLevel=0;
@@ -204,19 +202,18 @@ int main (){
             {
                 player = playerCopy;
                 boss = bossCopy;
-                hornet=hornetCopy;
                for(int i=0;i<MAX_GOBLINS;i++) 
                goblin[i]=goblinsCopy[i];
                prevLevel=-1;
                for(int i=0;i<MAX_SLIME;i++)
                slime[i]=slimeCopy[i];
-               healthboost.active=false;
                 gameOver = false;
                 victory = false;
                 cnt = 0;
             }
         BeginDrawing();
         ClearBackground(BLACK);
+        DrawTiledMap();
         UpdateAudio();
         //CHANGE LEVEL
         if(IsKeyPressed(KEY_ONE))
@@ -235,7 +232,7 @@ int main (){
                 LoadLevelPositions(currentLevel,goblin,goblinCount,slime,slimeCount,spike,spikeCount,level1Lasers,level2Lasers,level3Lasers,level4Lasers);
             }
 
-            DrawLevel(maplist[currentLevel]);
+            //DrawLevel(maplist[currentLevel]);
             // Draw Player
             if (player.isAttacking || player.attackCooldown>0){
                 if (player.pos.x<=boss.pos.x) DrawTexture (rightAttackTexture, player.pos.x-player.size/2, player.pos.y-player.size/2, WHITE);
@@ -257,15 +254,6 @@ int main (){
             if (cnt < 60 && currentLevel==3) {
                 Laser(p, player, boss); // Call the Laser function to draw the laser attack
             }
-            if(currentLevel==1) {
-            UpdateHornet(player,hornet, maplist[currentLevel].grid);
-            AttackHornet(player, hornet);
-             if(hornet.health<=0 && !hornet.xpGiven) {
-                player.xp+=50;
-                hornet.xpGiven=true;
-            }
-            DrawHornet(hornet);
-            }
             if(currentLevel==3) {
             UpdateBoss(player, boss, maplist[currentLevel].grid);
             // Attacking the Boss
@@ -283,6 +271,7 @@ int main (){
             for(int i=0;i<goblinCount;i++) {
              UpdateEnemy(goblin[i],maplist[currentLevel].grid,player);
              AttackEnemy(player, goblin[i]);
+             DrawTexture(goblinTexture, goblin[i].position.x, goblin[i].position.y, WHITE);
              DrawEnemy(goblin[i]);
              if(goblin[i].health<=0 && !goblin[i].xpGiven) {
                 player.xp+=10;
@@ -292,7 +281,8 @@ int main (){
              for(int i=0;i<slimeCount;i++) {
              UpdateSlime(slime[i],maplist[currentLevel].grid,player);
              AttackSlime(player,slime[i]);
-             DrawSlime(slime[i]);
+             //DrawSlime(slime[i]);
+             DrawTexture(slimeTexture, slime[i].position.x, slime[i].position.y, WHITE);
              if(slime[i].health<=0 && !slime[i].xpGiven) {
                 player.xp+=5;
                 slime[i].xpGiven=true;
@@ -374,6 +364,9 @@ int main (){
     UnloadTexture(noAttackTexture);
     UnloadTexture(leftAttackTexture);
     UnloadTexture(rightAttackTexture);
+    UnloadTexture(slimeTexture);
+    UnloadTexture(goblinTexture);
+    UnloadTiledMap();
     CloseWindow();
     CloseAudio();
 }
