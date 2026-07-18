@@ -12,6 +12,9 @@ int main (){
     float tile = 32.0f;
     InitWindow(screenWidth, screenHeight, "Game");
     SetTargetFPS(60);
+    Texture2D tileset = LoadTexture("ChatGPT Image Jul 17, 2026, 10_46_00 PM.png");
+int tilesetColumns = tileset.width / 32;
+    
     Levelconfig();
     Player player;
     player.pos = {480.0f, 448.0f};
@@ -55,7 +58,7 @@ int main (){
         }
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawLevel(maplist[3], tile); // Draw the fourth level in the maplist
+        DrawTileMap(tileset); // Draw the fourth level in the maplist
         DrawCircle(player.pos.x, player.pos.y, player.size/2, YELLOW); // Draw the player as a yellow circle
         DrawRectangle(boss.pos.x, boss.pos.y, boss.size, boss.size, RED); // Draw the boss as a red square
         //DrawTexture(bossTexture, boss.pos.x, boss.pos.y, WHITE);
@@ -76,4 +79,8 @@ int main (){
 
         EndDrawing();
     }
+    UnloadTexture(tileset);
+CloseWindow();
+
+return 0;
 }
